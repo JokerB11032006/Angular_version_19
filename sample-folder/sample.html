@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strides RPT Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom scrollbar (optional) */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Prevent body scroll; main content and sidebar will handle their own */
+        }
+        /* Ensure sidebar scrollbar doesn't cause layout shift on main content */
+        .sidebar {
+            scrollbar-gutter: stable;
+        }
+    </style>
+</head>
+<body class="bg-slate-100">
+
+    <!-- Sidebar -->
+    <aside class="sidebar w-64 bg-emerald-700 text-emerald-100 p-4 fixed top-0 left-0 h-full overflow-y-auto z-40">
+        <!-- Logo -->
+        <div class="flex items-center space-x-2 mb-6 px-2">
+            <svg class="h-10 w-10 text-white" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 4.16666C13.5 4.16666 4.16669 13.5 4.16669 25C4.16669 36.5 13.5 45.8333 25 45.8333C36.5 45.8333 45.8334 36.5 45.8334 25C45.8334 13.5 36.5 4.16666 25 4.16666ZM33.8333 33.8333C32.25 35.4167 29.25 36.0417 26.0417 36.0417C22.8333 36.0417 19.75 35.4167 18.1667 33.8333C16.5833 32.25 15.9583 29.25 15.9583 26.0417C15.9583 22.8333 16.5833 19.75 18.1667 18.1667C19.75 16.5833 22.8333 15.9583 26.0417 15.9583C29.25 15.9583 32.25 16.5833 33.8333 18.1667C35.4167 19.75 36.0417 22.8333 36.0417 26.0417C36.0417 29.25 35.4167 32.25 33.8333 33.8333Z" fill="white"/>
+                <path d="M25 10.4167C17 10.4167 10.4167 17 10.4167 25C10.4167 33 17 39.5833 25 39.5833C33 39.5833 39.5833 33 39.5833 25C39.5833 17 33 10.4167 25 10.4167ZM25 35.4167C19.25 35.4167 14.5833 30.75 14.5833 25C14.5833 19.25 19.25 14.5833 25 14.5833C30.75 14.5833 35.4167 19.25 35.4167 25C35.4167 30.75 30.75 35.4167 25 35.4167Z" fill="white" fill-opacity="0.6"/>
+            </svg>
+            <span class="text-2xl font-bold text-white">Strides</span>
+        </div>
+        <!-- Navigation -->
+        <nav id="sidebar-nav">
+            <!-- JS will populate this -->
+        </nav>
+    </aside>
+
+    <!-- Header (Fixed, positioned after sidebar) -->
+    <header id="page-header" class="fixed top-0 left-64 right-0 bg-white shadow-md p-4 flex justify-between items-center z-30 h-[72px]">
+        <h1 id="page-title" class="text-xl font-semibold text-gray-800">RPT List</h1> <!-- Default/Current Page Title -->
+        <div class="flex items-center space-x-4">
+            <div class="text-right">
+                <p class="text-sm font-medium text-gray-800">Krishna Kumar</p>
+                <p class="text-xs text-gray-500">Emp ID: S00123</p>
+                <div class="flex justify-end space-x-1 mt-1">
+                    <div class="h-1.5 w-5 bg-emerald-500 rounded-full"></div>
+                    <div class="h-1.5 w-8 bg-emerald-500 rounded-full"></div>
+                </div>
+            </div>
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-emerald-200">
+            <button class="bg-red-500 hover:bg-red-600 text-white text-sm py-2 px-3 rounded-md shadow-sm">
+                Logout
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content (Scrollable, positioned after sidebar and fixed header) -->
+    <main class="ml-64 mt-[72px] p-6 overflow-y-auto h-[calc(100vh-72px)] bg-slate-100">
+        <!-- Filters -->
+        <div class="bg-white shadow rounded-md p-4 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label for="entity-filter" class="block text-sm font-medium text-gray-700 mb-1">Entity</label>
+                    <select id="entity-filter" name="entity-filter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
+                        <option>All Entities</option>
+                        <option>Altima Innovations, Inc.</option>
+                        <option>Strides Pharma International AG</option>
+                        <option>Stelis Biopharma (Malaysia) Sdn. Bhd.</option>
+                        <option>SVADS Holdings SA</option>
+                        <option>UCL Brands Limited</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="financial-year-filter" class="block text-sm font-medium text-gray-700 mb-1">Financial Year</label>
+                    <select id="financial-year-filter" name="financial-year-filter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
+                        <option>FY 2023-24</option>
+                        <option>FY 2022-23</option>
+                        <option>FY 2021-22</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="period-quarter-filter" class="block text-sm font-medium text-gray-700 mb-1">Period Quarter</label>
+                    <select id="period-quarter-filter" name="period-quarter-filter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
+                        <option>All Quarters</option>
+                        <option>Q1 (Apr-Jun)</option>
+                        <option>Q2 (Jul-Sep)</option>
+                        <option>Q3 (Oct-Dec)</option>
+                        <option>Q4 (Jan-Mar)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTAs: Export, Download, Cancel -->
+        <div class=" ">
+          <div class="bg-white shadow rounded-md p-4 mb-6">
+          <div class="pb-4 flex flex-col md:flex-row items-center justify-between border-b border-gray-200">
+                <!-- Search Input -->
+                <div class="relative w-full md:w-2/5 lg:w-1/3 mb-3 md:mb-0">
+                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" id="table-search-input" placeholder="Search in table..." class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
+                </div>
+
+                <!-- CTAs -->
+                <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+                    <button type="button" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                        <i class="fas fa-file-export mr-2"></i>Export
+                    </button>
+                    <button type="button" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                        <i class="fas fa-download mr-2"></i>Download
+                    </button>
+                    <button type="button" id="cancel-action-button" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i class="fas fa-times mr-2"></i>Cancel
+                    </button>
+                </div>
+            </div>
+            <!-- Table -->
+        <div class="bg-white shadow rounded-md overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr id="table-header-row">
+                        <!-- JS will populate this -->
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200" id="table-body">
+                    <!-- JS will populate this -->
+                </tbody>
+            </table>
+        </div>
+      
+        </div>
+    
+      
+        </div>
+
+
+      
+        
+    </main>
+
+    <script>
+        const sidebarMenuData = [
+            {
+                title: "RPT Master", icon: "fa-folder",
+                items: [
+                    { name: "RPT List", href: "#rpt-list", active: true }, { name: "Update RPT", href: "#update-rpt" },
+                    { name: "Add RPT List", href: "#add-rpt-list" }, { name: "Agreement Summary", href: "#agreement-summary" },
+                    { name: "Upload", href: "#rpt-upload" }
+                ]
+            },
+            {
+                title: "Audit Committee Approval", icon: "fa-gavel",
+                items: [{ name: "Audit Committee Approval", href: "#audit-approval" }]
+            },
+            {
+                title: "RPT Transactions", icon: "fa-exchange-alt",
+                items: [
+                    { name: "RPT Transactions", href: "#rpt-transactions" },
+                    { name: "Entity Wise RPT Transactions", href: "#entity-rpt-transactions" },
+                    { name: "Upload", href: "#transactions-upload" }
+                ]
+            },
+            {
+                title: "Monitoring", icon: "fa-chart-line",
+                items: [
+                    { name: "Approved limits", href: "#approved-limits" },
+                    { name: "Update approval limits", href: "#update-limits" },
+                    { name: "Important notifications!!!", href: "#notifications", important: true }
+                ]
+            },
+            {
+                title: "Reporting", icon: "fa-file-alt",
+                items: [
+                    { name: "Ind AS Financials", href: "#ind-as-financials" },
+                    { name: "SEBI Half yearly reporting", href: "#sebi-reporting" },
+                    { name: "Approvals", href: "#reporting-approvals" }
+                ]
+            }
+        ];
+
+        const tableData = [
+            { "S.no": 1, "Name": "Altima Innovations, Inc.", "Entity Type": "Company", "Nature of business": "Pharmaceuticals", "Previous name": "-", "Contact Number": "+1-555-0101", "E-mail ID": "altima@domain.com", "Address": "101 Innovation Dr, CA, USA", "PAN": "AAAAA0001A", "GST": "NA", "CIN": "U12345DL2020ABC1", "Any Other Registration Number": "-", "Functional Currency": "USD", "Country": "USA", "Relationship creation date": "2021-04-10", "Relationship cessation date": "-", "Category": "Guarantee Commission Income (001)", "Nature of Relationship - IndAS": "Subsidiary", "Related party as per Companies Act": "Yes", "Related party as per LODR": "Yes", "Related party as per IndAS": "Yes", "Shareholding %": "100%", "Whether change in relationship": "No", "If yes, date of change in relationship": "-", "New Relationship": "-", "Attachments": "Attached", "Financial Information validation test": "Yes", "Validation Test": true },
+            { "S.no": 2, "Name": "Strides Pharma International AG", "Entity Type": "Company", "Nature of business": "Pharmaceuticals Export", "Previous name": "Fairmed Healthcare AG", "Contact Number": "+49-555-0102", "E-mail ID": "stridesag@domain.de", "Address": "Baselstrasse 99, Basel, CH", "PAN": "AAAAA0002B", "GST": "CHE123456789", "CIN": "U12345DL2021AGC2", "Any Other Registration Number": "-", "Functional Currency": "CHF", "Country": "Switzerland", "Relationship creation date": "2020-12-15", "Relationship cessation date": "-", "Category": "Sales of Materials/Services (006)", "Nature of Relationship - IndAS": "Joint Venture", "Related party as per Companies Act": "Yes", "Related party as per LODR": "Yes", "Related party as per IndAS": "Yes", "Shareholding %": "40%", "Whether change in relationship": "No", "If yes, date of change in relationship": "-", "New Relationship": "-", "Attachments": "Attached", "Financial Information validation test": "Yes", "Validation Test": true },
+            { "S.no": 3, "Name": "Stelis Biopharma (Malaysia) Sdn. Bhd.", "Entity Type": "Company", "Nature of business": "Biopharmaceuticals", "Previous name": "-", "Contact Number": "+60-3-5550103", "E-mail ID": "stelis.my@domain.my", "Address": "Kuala Lumpur, Malaysia", "PAN": "AAAAA0003C", "GST": "MY123456789", "CIN": "U12345DL2021STM3", "Any Other Registration Number": "-", "Functional Currency": "MYR", "Country": "Malaysia", "Relationship creation date": "2022-01-25", "Relationship cessation date": "-", "Category": "Reimbursement of Expenses (003)", "Nature of Relationship - IndAS": "Associate", "Related party as per Companies Act": "Yes", "Related party as per LODR": "Yes", "Related party as per IndAS": "Yes", "Shareholding %": "30%", "Whether change in relationship": "Yes", "If yes, date of change in relationship": "2023-03-10", "New Relationship": "Strategic Partner", "Attachments": "Attached", "Financial Information validation test": "Yes", "Validation Test": true },
+            { "S.no": 4, "Name": "SVADS Holdings SA", "Entity Type": "Company", "Nature of business": "Healthcare Investments", "Previous name": "-", "Contact Number": "+41-555-0104", "E-mail ID": "svads@domain.ch", "Address": "Geneva, Switzerland", "PAN": "AAAAA0004D", "GST": "NA", "CIN": "U12345DL2022SVD4", "Any Other Registration Number": "-", "Functional Currency": "CHF", "Country": "Switzerland", "Relationship creation date": "2019-07-12", "Relationship cessation date": "-", "Category": "Support Service Expenses (007)", "Nature of Relationship - IndAS": "Equity Investment", "Related party as per Companies Act": "No", "Related party as per LODR": "No", "Related party as per IndAS": "Yes", "Shareholding %": "20%", "Whether change in relationship": "No", "If yes, date of change in relationship": "-", "New Relationship": "-", "Attachments": "Attached", "Financial Information validation test": "Yes", "Validation Test": true },
+            { "S.no": 5, "Name": "UCL Brands Limited", "Entity Type": "Company", "Nature of business": "Consumer Healthcare Products", "Previous name": "-", "Contact Number": "+91-22-5550105", "E-mail ID": "uclbrands@domain.in", "Address": "Mumbai, Maharashtra, India", "PAN": "AAAAA0005E", "GST": "27AAAAA0005E1Z1", "CIN": "U12345MH2023UCL5", "Any Other Registration Number": "-", "Functional Currency": "INR", "Country": "India", "Relationship creation date": "2023-05-08", "Relationship cessation date": "-", "Category": "Lease Payments (009)", "Nature of Relationship - IndAS": "Lease Agreement", "Related party as per Companies Act": "Yes", "Related party as per LODR": "No", "Related party as per IndAS": "Yes", "Shareholding %": "10%", "Whether change in relationship": "No", "If yes, date of change in relationship": "-", "New Relationship": "-", "Attachments": "Attached", "Financial Information validation test": "Yes", "Validation Test": false }
+        ];
+
+        const pageTitleElement = document.getElementById('page-title');
+        let initialTitleSet = false;
+
+        // Populate Sidebar
+        const sidebarNav = document.getElementById('sidebar-nav');
+        sidebarMenuData.forEach((category, index) => {
+            const categoryDiv = document.createElement('div');
+            if (index > 0) {
+                categoryDiv.classList.add('pt-3', 'mt-3', 'border-t', 'border-emerald-600');
+            }
+
+            const categoryTitleButton = document.createElement('button');
+            categoryTitleButton.className = 'w-full flex items-center justify-between text-left py-2 px-2 rounded text-white hover:bg-emerald-600 focus:outline-none transition-colors duration-150';
+            categoryTitleButton.innerHTML = `
+                <span class="font-semibold text-sm"><i class="fas ${category.icon} fa-fw mr-2 w-4"></i>${category.title}</span>
+                <i class="fas fa-chevron-down transform transition-transform duration-200 text-emerald-300 text-xs"></i>
+            `;
+
+            const subMenuUl = document.createElement('ul');
+            subMenuUl.className = 'mt-1 space-y-0.5 pl-4 hidden'; 
+
+            let categoryHasActiveItem = false;
+            category.items.forEach(item => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = item.href;
+                link.className = 'block py-1.5 px-3 rounded text-sm text-emerald-200 hover:text-white hover:bg-emerald-600 focus:outline-none focus:bg-emerald-600 focus:text-white transition-colors duration-150';
+                if (item.important) {
+                    link.innerHTML = `${item.name} <i class="fas fa-exclamation-circle text-yellow-400 ml-1"></i>`;
+                } else {
+                    link.textContent = item.name;
+                }
+
+                if (item.active && !initialTitleSet) {
+                    link.classList.add('bg-emerald-600', 'text-white', 'font-semibold');
+                    link.style.borderLeft = '3px solid white';
+                    link.style.paddingLeft = `calc(0.75rem - 3px)`;
+                    categoryHasActiveItem = true;
+                    if (pageTitleElement) {
+                        pageTitleElement.textContent = item.name;
+                        initialTitleSet = true; 
+                    }
+                }
+                listItem.appendChild(link);
+                subMenuUl.appendChild(listItem);
+            });
+
+            if (categoryHasActiveItem) {
+                subMenuUl.classList.remove('hidden');
+                categoryTitleButton.querySelector('i.fa-chevron-down').classList.add('rotate-180');
+            }
+
+            categoryTitleButton.addEventListener('click', () => {
+                subMenuUl.classList.toggle('hidden');
+                categoryTitleButton.querySelector('i.fa-chevron-down').classList.toggle('rotate-180');
+            });
+
+            categoryDiv.appendChild(categoryTitleButton);
+            categoryDiv.appendChild(subMenuUl);
+            sidebarNav.appendChild(categoryDiv);
+        });
+
+        // Active link handling for sidebar and page title update
+        const sidebarLinks = document.querySelectorAll('#sidebar-nav a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // e.preventDefault(); // Uncomment if using JS for SPA-like navigation
+                
+                sidebarLinks.forEach(l => {
+                    l.classList.remove('bg-emerald-600', 'text-white', 'font-semibold');
+                    l.style.borderLeft = '';
+                    l.style.paddingLeft = '0.75rem'; 
+                    if (!l.className.includes('hover:text-white')) { 
+                        l.classList.add('text-emerald-200');
+                    }
+                });
+                this.classList.add('bg-emerald-600', 'text-white', 'font-semibold');
+                this.classList.remove('text-emerald-200');
+                this.style.borderLeft = '3px solid white';
+                this.style.paddingLeft = `calc(0.75rem - 3px)`;
+
+                // Update Page Title
+                const href = this.getAttribute('href');
+                let newTitle = "Dashboard"; // Fallback title
+                for (const category of sidebarMenuData) {
+                    const foundItem = category.items.find(i => i.href === href);
+                    if (foundItem) {
+                        newTitle = foundItem.name; 
+                        break;
+                    }
+                }
+                if (pageTitleElement) {
+                    pageTitleElement.textContent = newTitle;
+                }
+            });
+        });
+
+        // Populate Table
+        const tableHeaderRow = document.getElementById('table-header-row');
+        const tableBody = document.getElementById('table-body');
+
+        if (tableData.length > 0) {
+            const headers = Object.keys(tableData[0]);
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.scope = "col";
+                th.className = "px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap";
+                th.textContent = header.replace(/_/g, ' ');
+                tableHeaderRow.appendChild(th);
+            });
+
+            tableData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition-colors duration-150";
+                headers.forEach(header => {
+                    const td = document.createElement('td');
+                    td.className = "px-5 py-3 whitespace-nowrap text-sm text-gray-700";
+                    if (header === "Validation Test" && typeof row[header] === 'boolean') {
+                        const checkboxContainer = document.createElement('div');
+                        checkboxContainer.className = 'flex justify-center items-center'; 
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.checked = row[header];
+                        checkbox.disabled = true; 
+                        checkbox.className = "h-4 w-4 accent-emerald-600 rounded";
+                        checkboxContainer.appendChild(checkbox);
+                        td.appendChild(checkboxContainer);
+                    } else {
+                        td.textContent = row[header];
+                    }
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>

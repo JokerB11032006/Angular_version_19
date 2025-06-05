@@ -1,0 +1,121 @@
+<div class="app-container">
+    <!-- Navigation sidebar -->
+    <app-nav></app-nav>
+
+    <!-- Main content area -->
+    <main class="main-content">
+        <!-- Header -->
+        <app-header></app-header>
+
+        <!-- Content area -->
+        <div class="content-area">
+            <!-- Upload sections container -->
+            <div class="upload-container">
+                <!-- RPT List Bulk upload -->
+                <div class="upload-section">
+                    <h2>RPT List Bulk upload</h2>
+                    <div class="upload-box" 
+                         [class.drag-over]="uploadSections['bulk'].isDragging"
+                         (dragover)="onDragOver($event, 'bulk')"
+                         (dragleave)="onDragLeave($event, 'bulk')"
+                         (drop)="onFileDropped($event, 'bulk')">
+                        <input type="file" 
+                               accept=".csv,.xlsx" 
+                               (change)="onFileSelected($event, 'bulk')"
+                               #bulkUpload
+                               hidden>
+                        <div class="upload-content" (click)="bulkUpload.click()">
+                            <i class="fas fa-upload"></i>
+                            <span>Drag & drop CSV / XLSX here</span>
+                        </div>
+                    </div>
+                    <!-- Uploaded files list -->
+                    <div class="uploaded-files" *ngIf="uploadSections['bulk'].files.length > 0">
+                        <div class="file-item" *ngFor="let file of uploadSections['bulk'].files; let i = index">
+                            <div class="file-info">
+                                <i class="fas fa-file-excel"></i>
+                                <span class="file-name">{{ file.name }}</span>
+                                <span class="file-size">{{ file.size }}</span>
+                            </div>
+                            <button class="remove-file" (click)="removeFile('bulk', i)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RPT List attachment -->
+                <div class="upload-section">
+                    <h2>RPT List attachment</h2>
+                    <div class="upload-box"
+                         [class.drag-over]="uploadSections['attachment'].isDragging"
+                         (dragover)="onDragOver($event, 'attachment')"
+                         (dragleave)="onDragLeave($event, 'attachment')"
+                         (drop)="onFileDropped($event, 'attachment')">
+                        <input type="file" 
+                               accept=".csv,.xlsx" 
+                               (change)="onFileSelected($event, 'attachment')"
+                               #attachmentUpload
+                               hidden>
+                        <div class="upload-content" (click)="attachmentUpload.click()">
+                            <i class="fas fa-upload"></i>
+                            <span>Drag & drop CSV / XLSX here</span>
+                        </div>
+                    </div>
+                    <!-- Uploaded files list -->
+                    <div class="uploaded-files" *ngIf="uploadSections['attachment'].files.length > 0">
+                        <div class="file-item" *ngFor="let file of uploadSections['attachment'].files; let i = index">
+                            <div class="file-info">
+                                <i class="fas fa-file-excel"></i>
+                                <span class="file-name">{{ file.name }}</span>
+                                <span class="file-size">{{ file.size }}</span>
+                            </div>
+                            <button class="remove-file" (click)="removeFile('attachment', i)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RPT Agreements Bulk upload -->
+                <div class="upload-section">
+                    <h2>RPT Agreements Bulk upload</h2>
+                    <div class="upload-box"
+                         [class.drag-over]="uploadSections['agreements'].isDragging"
+                         (dragover)="onDragOver($event, 'agreements')"
+                         (dragleave)="onDragLeave($event, 'agreements')"
+                         (drop)="onFileDropped($event, 'agreements')">
+                        <input type="file" 
+                               accept=".csv,.xlsx" 
+                               (change)="onFileSelected($event, 'agreements')"
+                               #agreementsUpload
+                               hidden>
+                        <div class="upload-content" (click)="agreementsUpload.click()">
+                            <i class="fas fa-upload"></i>
+                            <span>Drag & drop CSV / XLSX here</span>
+                        </div>
+                    </div>
+                    <!-- Uploaded files list -->
+                    <div class="uploaded-files" *ngIf="uploadSections['agreements'].files.length > 0">
+                        <div class="file-item" *ngFor="let file of uploadSections['agreements'].files; let i = index">
+                            <div class="file-info">
+                                <i class="fas fa-file-excel"></i>
+                                <span class="file-name">{{ file.name }}</span>
+                                <span class="file-size">{{ file.size }}</span>
+                            </div>
+                            <button class="remove-file" (click)="removeFile('agreements', i)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="action-buttons">
+                <button class="btn-cancel" (click)="onCancel()">Cancel</button>
+                <button class="btn-save" (click)="onSave()">Save</button>
+            </div>
+        </div>
+    </main>
+</div> 

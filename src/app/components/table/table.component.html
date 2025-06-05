@@ -1,0 +1,151 @@
+<!-- Filters -->
+<div class="filters">
+    <div class="filter-grid">
+        <div class="filter-item">
+            <label for="entity-filter">Entity</label>
+            <select id="entity-filter" [(ngModel)]="selectedEntity">
+                <option *ngFor="let entity of entities">{{entity}}</option>
+            </select>
+        </div>
+        <div class="filter-item">
+            <label for="financial-year-filter">Financial Year</label>
+            <select id="financial-year-filter" [(ngModel)]="selectedFinancialYear">
+                <option *ngFor="let year of financialYears">{{year}}</option>
+            </select>
+        </div>
+        <div class="filter-item">
+            <label for="period-quarter-filter">Period Quarter</label>
+            <select id="period-quarter-filter" [(ngModel)]="selectedQuarter">
+                <option *ngFor="let quarter of quarters">{{quarter}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Table Container with Actions -->
+<div class="table-wrapper">
+    <div class="table-actions">
+        <div class="search-section">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" 
+                       [(ngModel)]="searchQuery"
+                       placeholder="Search in table..." 
+                       id="table-search-input">
+            </div>
+        </div>
+
+        <!-- <div class="action-buttons" *ngIf="!isEditMode">
+            <button class="btn-edit" (click)="toggleEditMode()">
+              <i class="fas fa-pen"></i> Edit
+            </button>
+            <button class="btn-export" (click)="onExport()">
+              <i class="fas fa-file-export"></i> Export
+            </button>
+            <button class="btn-download" (click)="onDownload()">
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div> -->
+
+          <div class="action-buttons">
+            <!-- Show this group if NOT in edit mode -->
+            <ng-container *ngIf="!isEditMode; else editModeButtons">
+              <button class="btn-edit" (click)="toggleEditMode()">
+                <i class="fas fa-pen"></i> Edit
+              </button>
+              <button class="btn-export" (click)="onExport()">
+                <i class="fas fa-file-export"></i> Export
+              </button>
+              <button class="btn-download" (click)="onDownload()">
+                <i class="fas fa-download"></i> Download
+              </button>
+            </ng-container>
+          
+            <!-- Show this group if in edit mode -->
+            <ng-template #editModeButtons>
+              <button class="btn-save" (click)="onSaveChanges()">
+                <i class="fas fa-check"></i> Save Changes
+              </button>
+              <button class="btn-cancel-edit" (click)="onCancelEdit()">
+                <i class="fas fa-times"></i> Cancel Edit
+              </button>
+            </ng-template>
+          </div>
+    </div>
+
+    <!-- Edit Mode Actions -->
+    <!-- <div class="edit-mode-actions" *ngIf="isEditMode">
+        <button class="btn-save" (click)="onSaveChanges()">
+          <i class="fas fa-check"></i> Save Changes
+        </button>
+        <button class="btn-cancel-edit" (click)="onCancelEdit()">
+          <i class="fas fa-times"></i> Cancel Edit
+        </button>
+      </div> -->
+<div class="container-table">
+    <div class="table-container">
+        <table [class.edit-mode]="isEditMode">
+            <thead>
+                <tr>
+                    <th>S.NO</th>
+                    <th>NAME</th>
+                    <th>ENTITY TYPE</th>
+                    <th>NATURE OF BUSINESS</th>
+                    <th>PREVIOUS NAME</th>
+                    <th>CONTACT NUMBER</th>
+                    <th>E-MAIL ID</th>
+                    <th>ADDRESS</th>
+                    <th>PAN</th>
+                    <th>GST</th>
+                    <th>CIN</th>
+                    <th>ANY OTHER REGISTRATION NUMBER</th>
+                    <th>FUNCTIONAL CURRENCY</th>
+                    <th>COUNTRY</th>
+                    <th>RELATIONSHIP CREATION DATE</th>
+                    <th>RELATIONSHIP CESSATION DATE</th>
+                    <th>CATEGORY</th>
+                    <th>NATURE OF RELATIONSHIP - INDAS</th>
+                    <th>RELATED PARTY AS PER COMPANIES ACT</th>
+                    <th>RELATED PARTY AS PER LODR</th>
+                    <th>RELATED PARTY AS PER INDAS</th>
+                    <th>SHAREHOLDING %</th>
+                    <th>WHETHER CHANGE IN RELATIONSHIP</th>
+                    <th>IF YES, DATE OF CHANGE IN RELATIONSHIP</th>
+                    <th>NEW RELATIONSHIP</th>
+                    <th>ATTACHMENTS</th>
+                    <th>FINANCIAL INFORMATION VALIDATION TEST</th>
+                    <th class="validation-test">VALIDATION TEST</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of tableData; let i = index">
+                    <td>{{row['S.no']}}</td>
+                    <ng-container *ngFor="let col of ['NAME', 'ENTITY TYPE', 'NATURE OF BUSINESS', 'PREVIOUS NAME', 'CONTACT NUMBER', 'E-MAIL ID', 'ADDRESS', 'PAN', 'GST', 'CIN', 'ANY OTHER REGISTRATION NUMBER', 'FUNCTIONAL CURRENCY', 'COUNTRY', 'RELATIONSHIP CREATION DATE', 'RELATIONSHIP CESSATION DATE', 'CATEGORY', 'NATURE OF RELATIONSHIP - INDAS', 'RELATED PARTY AS PER COMPANIES ACT', 'RELATED PARTY AS PER LODR', 'RELATED PARTY AS PER INDAS', 'SHAREHOLDING %', 'WHETHER CHANGE IN RELATIONSHIP', 'IF YES, DATE OF CHANGE IN RELATIONSHIP', 'NEW RELATIONSHIP', 'ATTACHMENTS', 'FINANCIAL INFORMATION VALIDATION TEST']">
+                        <td (dblclick)="onDoubleClick(i, col, row[col])" 
+                            [class.editing]="isEditing(i, col)"
+                            [class.editable]="isEditMode">
+                            <ng-container *ngIf="!isEditing(i, col)">{{row[col]}}</ng-container>
+                            <input *ngIf="isEditing(i, col)"
+                                   type="text"
+                                   [(ngModel)]="editValue"
+                                   (keydown)="onKeyDown($event, i, col)"
+                                   (blur)="saveEdit(i, col)"
+                                   class="edit-input"
+                                   [class.date-input]="col.includes('DATE')"
+                                   [type]="col.includes('DATE') ? 'date' : 'text'"
+                                   autofocus>
+                        </td>
+                    </ng-container>
+                    <td class="validation-test">
+                        <div class="checkbox-container">
+                            <input type="checkbox" 
+                                   [checked]="row['VALIDATION TEST']" 
+                                   [disabled]="!isEditMode">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div> 

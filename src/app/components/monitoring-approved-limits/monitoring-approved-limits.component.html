@@ -1,0 +1,94 @@
+<div class="app-container">
+    <!-- Navigation sidebar -->
+    <app-nav></app-nav>
+
+    <!-- Main content area -->
+    <main class="main-content">
+        <!-- Header -->
+        <app-header></app-header>
+
+        <!-- Content area -->
+        <div class="content-area">
+            <div class="page-header">
+                <h1>Approve Limits</h1>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="filters-section">
+                <div class="filter-group">
+                    <label>Financial Year</label>
+                    <select [(ngModel)]="selectedFinancialYear">
+                        <option *ngFor="let year of financialYears" [value]="year">
+                            {{ year }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Period Quarter</label>
+                    <select [(ngModel)]="selectedQuarter">
+                        <option *ngFor="let quarter of quarters" [value]="quarter">
+                            {{ quarter }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Actions Row -->
+            <div class="actions-row">
+                <div class="search-box">
+                    <input type="text" 
+                           placeholder="Search in table..."
+                           [(ngModel)]="searchQuery"
+                           (input)="onSearch($event)">
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-export" (click)="onExport()">Export</button>
+                    <button class="btn-download" (click)="onDownload()">Download</button>
+                </div>
+            </div>
+
+            <!-- Table Section -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S.NO</th>
+                            <th>ENTITY NAME 1</th>
+                            <th>ENTITY NAME 2</th>
+                            <th>CATEGORY</th>
+                            <th>CURRENCY</th>
+                            <th>EXCHANGE RATE</th>
+                            <th>AMOUNT OF LIMIT</th>
+                            <th>ADDITIONAL REMARKS</th>
+                            <th>VALIDATION TEST</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let limit of approvedLimits">
+                            <td>{{ limit.sNo }}</td>
+                            <td>{{ limit.entityName1 }}</td>
+                            <td>{{ limit.entityName2 }}</td>
+                            <td>{{ limit.category }}</td>
+                            <td>{{ limit.currency }}</td>
+                            <td class="numeric">{{ limit.exchangeRate }}</td>
+                            <td class="numeric">{{ limit.amountOfLimit | number }}</td>
+                            <td>{{ limit.additionalRemarks }}</td>
+                            <td>
+                                <span class="validation-status" [class]="limit.validationTest.toLowerCase().replace(' ', '-')">
+                                    {{ limit.validationTest }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Bottom Action Buttons -->
+            <div class="bottom-actions">
+                <button class="btn-cancel" (click)="onCancel()">Cancel</button>
+                <button class="btn-save" (click)="onSaveAndUpdate()">Save & Update</button>
+            </div>
+        </div>
+    </main>
+</div> 

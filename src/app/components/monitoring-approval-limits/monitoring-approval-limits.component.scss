@@ -1,0 +1,248 @@
+/* Base layout */
+:host {
+    display: block;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+.app-container {
+    display: flex;
+    height: 100%;
+    background-color: #f5f6f8;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 256px; // Width of the nav sidebar
+    min-width: 0;
+}
+
+.content-area {
+    flex: 1;
+    padding: 24px;
+    margin-top: 64px; // Height of the header
+}
+
+/* Page Header */
+.page-header {
+    margin-bottom: 32px;
+
+    h1 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0;
+    }
+}
+
+/* Upload Section */
+.upload-section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.upload-container {
+    margin-bottom: 32px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.upload-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+
+    h3 {
+        font-size: 16px;
+        font-weight: 500;
+        color: #1f2937;
+        margin: 0;
+    }
+
+    .btn-download {
+        background-color: white;
+        color: #2563eb;
+        border: 1px solid #2563eb;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: #eff6ff;
+        }
+    }
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 24px;
+    transition: all 0.2s;
+    background-color: #f9fafb;
+    margin-bottom: 16px;
+
+    &.dragging {
+        border-color: #2563eb;
+        background-color: #eff6ff;
+    }
+}
+
+.upload-content {
+    .upload-prompt {
+        .upload-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+
+            .upload-button {
+                background-color: #2563eb;
+                color: white;
+                padding: 8px 16px;
+                border: none;
+                border-radius: 4px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background-color 0.2s;
+
+                &:hover {
+                    background-color: #1d4ed8;
+                }
+            }
+
+            .upload-text {
+                color: #6b7280;
+                font-size: 14px;
+            }
+        }
+
+        .file-type-info {
+            color: #9ca3af;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+    }
+}
+
+/* File Info */
+.file-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background-color: #f3f4f6;
+    border-radius: 4px;
+    margin-bottom: 8px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .file-name {
+        color: #1f2937;
+        font-size: 14px;
+        word-break: break-all;
+    }
+
+    .remove-file {
+        background: none;
+        border: none;
+        color: #ef4444;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 4px;
+        line-height: 1;
+        margin-left: 8px;
+        flex-shrink: 0;
+
+        &:hover {
+            color: #dc2626;
+        }
+    }
+}
+
+.attachments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Upload Status */
+.upload-status {
+    font-size: 14px;
+    margin-top: 8px;
+    
+    &:empty {
+        display: none;
+    }
+
+    &:contains('Error') {
+        color: #ef4444;
+    }
+
+    &:contains('successful') {
+        color: #059669;
+    }
+
+    &:contains('Uploading') {
+        color: #2563eb;
+    }
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    justify-content: flex-end;
+
+    button {
+        padding: 10px 24px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: 'Inter', sans-serif;
+
+        &.btn-cancel {
+            background-color: white;
+            border: 1px solid #d1d5db;
+            color: #4b5563;
+
+            &:hover {
+                background-color: #f9fafb;
+            }
+        }
+
+        &.btn-save {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+
+            &:hover {
+                background-color: #1d4ed8;
+            }
+
+            &:disabled {
+                background-color: #d1d5db;
+                cursor: not-allowed;
+            }
+        }
+    }
+} 

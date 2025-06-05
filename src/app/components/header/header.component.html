@@ -1,0 +1,20 @@
+<!-- Header (Fixed, positioned after sidebar) -->
+<header class="header">
+    <h1 class="page-title">RPT List</h1>
+    
+    <div class="user-section">
+        <div class="user-info">
+            <p class="user-name">{{userData.name}}</p>
+            <p class="user-emp-id">Emp ID: {{userData.empId}}</p>
+            
+        </div>
+
+        <img [src]="userData.avatarUrl" 
+             [alt]="userData.name" 
+             class="user-avatar">
+
+        <button class="logout-button" (click)="onLogout()">
+            Logout
+        </button>
+    </div>
+</header> 

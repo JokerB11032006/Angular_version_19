@@ -1,0 +1,89 @@
+<div class="app-container">
+    <!-- Navigation sidebar -->
+    <app-nav></app-nav>
+
+    <!-- Main content area -->
+    <main class="main-content">
+        <!-- Header -->
+        <app-header></app-header>
+
+        <!-- Content area -->
+        <div class="content-area">
+            <!-- Page Title -->
+            <div class="page-header">
+                <h1>Audit Committee Approval</h1>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-section">
+                <!-- Top Filters -->
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label>Financial Year</label>
+                        <select [(ngModel)]="selectedFinancialYear">
+                            <option *ngFor="let year of financialYears" [value]="year">{{ year }}</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Period Quarter</label>
+                        <select [(ngModel)]="selectedQuarter">
+                            <option *ngFor="let quarter of quarters" [value]="quarter">{{ quarter }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Entity Selection Cards -->
+                <div class="entity-cards">
+                    <!-- Entity Selection Card 1 -->
+                    <div class="entity-row">
+                        <div class="entity-select">
+                            <select [(ngModel)]="selectedEntities[1]" 
+                                    (ngModelChange)="onEntitySelect($event, 1)">
+                                <option value="" disabled selected>Select Entity</option>
+                                <option *ngFor="let entity of entities" [value]="entity">{{ entity }}</option>
+                            </select>
+                        </div>
+                        <button class="btn-download" 
+                                [disabled]="isDownloadDisabled(1)"
+                                (click)="onDownloadTemplate(1)">
+                            Download Audit Comitte Template
+                        </button>
+                    </div>
+
+                    <!-- Entity Selection Card 2 -->
+                    <div class="entity-row">
+                        <div class="entity-select">
+                            <select [(ngModel)]="selectedEntities[2]"
+                                    (ngModelChange)="onEntitySelect($event, 2)">
+                                <option value="" disabled selected>Select Entity</option>
+                                <option *ngFor="let entity of entities" [value]="entity">{{ entity }}</option>
+                            </select>
+                        </div>
+                        <button class="btn-download" 
+                                [disabled]="isDownloadDisabled(2)"
+                                (click)="onDownloadTemplate(2)">
+                            Download Loan Movement Template
+                        </button>
+                    </div>
+
+                    <!-- Entity Selection Card 3 -->
+                    <div class="entity-row">
+                        <div class="entity-select">
+                            <select [(ngModel)]="selectedEntities[3]"
+                                    (ngModelChange)="onEntitySelect($event, 3)">
+                                <option value="" disabled selected>Select Entity</option>
+                                <option *ngFor="let entity of entities" [value]="entity">{{ entity }}</option>
+                            </select>
+                        </div>
+                        <button class="btn-download" 
+                                [disabled]="isDownloadDisabled(3)"
+                                (click)="onDownloadTemplate(3)">
+                            Download Investment Movement Template
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div> 

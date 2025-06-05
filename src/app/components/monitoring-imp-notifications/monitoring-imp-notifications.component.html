@@ -1,0 +1,93 @@
+<div class="app-container">
+    <!-- Navigation sidebar -->
+    <app-nav></app-nav>
+
+    <!-- Main content area -->
+    <main class="main-content">
+        <!-- Header -->
+        <app-header></app-header>
+
+        <!-- Content area -->
+        <div class="content-area">
+            <div class="page-header">
+                <h1>Important Notification</h1>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="filters-section">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>Financial Year</label>
+                        <select [(ngModel)]="selectedFinancialYear">
+                            <option *ngFor="let year of financialYears" [value]="year">
+                                {{ year }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Period Quarter</label>
+                        <select [(ngModel)]="selectedPeriodQuarter">
+                            <option *ngFor="let quarter of periodQuarters" [value]="quarter">
+                                {{ quarter }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Section -->
+            <div class="table-section">
+                <div class="table-header">
+                    <div class="search-box">
+                        <input type="text" 
+                               placeholder="Search in table..." 
+                               [value]="searchText"
+                               (input)="onSearch($event)">
+                    </div>
+                    <div class="table-actions">
+                        <button class="btn-export" (click)="onExport()">Export</button>
+                        <button class="btn-download" (click)="onDownload()">Download</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.NO</th>
+                                <th>ENTITY NAME 1</th>
+                                <th>ENTITY NAME 2</th>
+                                <th>TURNOVER OF ENTITY 1</th>
+                                <th>CATEGORY</th>
+                                <th>TOTAL APPROVE OF LIMIT</th>
+                                <th>LIMIT UTILISED</th>
+                                <th>% OF LIMIT UTILISED</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of notificationRows">
+                                <td>{{ row.sNo }}</td>
+                                <td>{{ row.entityName1 }}</td>
+                                <td>{{ row.entityName2 }}</td>
+                                <td>{{ row.turnoverOfEntity1 | number:'1.0-0' }}</td>
+                                <td>{{ row.category }}</td>
+                                <td>{{ row.totalApproveOfLimit | number:'1.0-0' }}</td>
+                                <td>{{ row.limitUtilised | number:'1.0-0' }}</td>
+                                <td>{{ row.percentageOfLimitUtilised | number:'1.1-1' }}%</td>
+                                <td><span class="action-link">{{ row.action }}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bottom Actions -->
+            <div class="bottom-actions">
+                <button class="btn-cancel" (click)="onCancel()">Cancel</button>
+                <button class="btn-save" (click)="onSaveAndUpdate()">Save & Update</button>
+            </div>
+        </div>
+    </main>
+</div> 

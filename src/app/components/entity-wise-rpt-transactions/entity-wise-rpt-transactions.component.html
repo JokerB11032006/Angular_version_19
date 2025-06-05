@@ -1,0 +1,70 @@
+<div class="app-container">
+    <!-- Navigation sidebar -->
+    <app-nav></app-nav>
+
+    <!-- Main content area -->
+    <main class="main-content">
+        <!-- Header -->
+        <app-header></app-header>
+
+        <!-- Content area -->
+        <div class="content-area">
+            <!-- Page Title -->
+            <div class="page-header">
+                <h1>Entity Wise RPT Transactions</h1>
+            </div>
+
+            <!-- Search and Download Section -->
+            <div class="actions-row">
+                <div class="search-box">
+                    <input type="text" 
+                           [(ngModel)]="searchQuery"
+                           (input)="searchTransactions($any($event.target).value)"
+                           placeholder="Search in table...">
+                </div>
+                <button class="btn-download" (click)="downloadCurrentView()">
+                    Download Current View
+                </button>
+            </div>
+
+            <!-- Transactions Table -->
+            <div class="transactions-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ENTITY NAME 1</th>
+                            <th>GROUPINGS</th>
+                            <th>ENTITY 2</th>
+                            <th>POSTING DATE</th>
+                            <th>DOCUMENT CURRENCY (INR)</th>
+                            <th>AMOUNT IN LOCAL CURRENCY</th>
+                            <th>REPORTING CURRENCY</th>
+                            <th>EXCHANGE RATE</th>
+                            <th>AMOUNT OF EXCHANGE</th>
+                            <th>AMOUNT IN REPORTING</th>
+                            <th>NATURE OF TRANSACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let transaction of transactions">
+                            <td>{{ transaction.entityName1 }}</td>
+                            <td>{{ transaction.groupings }}</td>
+                            <td>{{ transaction.entity2 }}</td>
+                            <td>{{ transaction.postingDate }}</td>
+                            <td>{{ transaction.documentCurrency }}</td>
+                            <td class="amount">{{ transaction.amountInLocalCurrency | number:'1.2-2' }}</td>
+                            <td>{{ transaction.reportingCurrency }}</td>
+                            <td class="amount">{{ transaction.exchangeRate | number:'1.2-2' }}</td>
+                            <td class="amount">{{ transaction.amountOfExchange | number:'1.2-2' }}</td>
+                            <td class="amount">{{ transaction.amountInReporting | number:'1.2-2' }}</td>
+                            <td>{{ transaction.natureOfTransaction }}</td>
+                        </tr>
+                        <tr *ngIf="transactions.length === 0">
+                            <td colspan="11" class="no-data">No transactions found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div> 

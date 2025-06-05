@@ -1,0 +1,58 @@
+<!-- Sidebar -->
+<aside class="sidebar w-64 bg-emerald-700 text-emerald-100 p-4 fixed top-0 left-0 h-full overflow-y-auto z-40">
+    <!-- Logo -->
+    <div class="flex items-center space-x-2 mb-6 px-2">
+        <svg class="logo-icon" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25 4.16666C13.5 4.16666 4.16669 13.5 4.16669 25C4.16669 36.5 13.5 45.8333 25 45.8333C36.5 45.8333 45.8334 36.5 45.8334 25C45.8334 13.5 36.5 4.16666 25 4.16666ZM33.8333 33.8333C32.25 35.4167 29.25 36.0417 26.0417 36.0417C22.8333 36.0417 19.75 35.4167 18.1667 33.8333C16.5833 32.25 15.9583 29.25 15.9583 26.0417C15.9583 22.8333 16.5833 19.75 18.1667 18.1667C19.75 16.5833 22.8333 15.9583 26.0417 15.9583C29.25 15.9583 32.25 16.5833 33.8333 18.1667C35.4167 19.75 36.0417 22.8333 36.0417 26.0417C36.0417 29.25 35.4167 32.25 33.8333 33.8333Z" fill="white"/>
+            <path d="M25 10.4167C17 10.4167 10.4167 17 10.4167 25C10.4167 33 17 39.5833 25 39.5833C33 39.5833 39.5833 33 39.5833 25C39.5833 17 33 10.4167 25 10.4167ZM25 35.4167C19.25 35.4167 14.5833 30.75 14.5833 25C14.5833 19.25 19.25 14.5833 25 14.5833C30.75 14.5833 35.4167 19.25 35.4167 25C35.4167 30.75 30.75 35.4167 25 35.4167Z" fill="white" fill-opacity="0.6"/>
+        </svg>
+        <span class="text-2xl font-bold text-white">Strides</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="sidebar-nav">
+        <div *ngFor="let category of sidebarMenuData; let i = index" 
+             [class.pt-3]="i > 0" 
+             [class.mt-3]="i > 0" 
+             [class.border-t]="i > 0" 
+             [class.border-emerald-600]="i > 0">
+            
+            <!-- Category Title -->
+            <button (click)="toggleSubMenu(category)" 
+                    class="w-full flex items-center justify-between text-left py-2 px-2 rounded text-white hover:bg-emerald-600 focus:outline-none transition-colors duration-150">
+                <span class="font-semibold text-sm">
+                    <!-- RPT Master -->
+                    <i *ngIf="category.title === 'RPT Master'" class="fas fa-folder fa-fw mr-2 w-4"></i>
+                    <!-- Audit Committee Approval -->
+                    <i *ngIf="category.title === 'Audit Committee Approval'" class="fas fa-gavel fa-fw mr-2 w-4"></i>
+                    <!-- RPT Transactions -->
+                    <i *ngIf="category.title === 'RPT Transactions'" class="fas fa-exchange-alt fa-fw mr-2 w-4"></i>
+                    <!-- Monitoring -->
+                    <i *ngIf="category.title === 'Monitoring'" class="fas fa-chart-line fa-fw mr-2 w-4"></i>
+                    <!-- Reporting -->
+                    <i *ngIf="category.title === 'Reporting'" class="fas fa-file-alt fa-fw mr-2 w-4"></i>
+                    {{category.title}}
+                </span>
+                <i class="fas fa-chevron-down transform transition-transform duration-200 text-emerald-300 text-xs"
+                   [class.rotate-180]="category.isExpanded"></i>
+            </button>
+
+            <!-- Sub Menu -->
+            <ul class="mt-1 space-y-0.5 pl-4" [class.hidden]="!category.isExpanded">
+                <li *ngFor="let item of category.items">
+                    <a [href]="item.href"
+                       (click)="setActiveLink(category, item)"
+                       [class.bg-emerald-600]="item.active"
+                       [class.text-white]="item.active"
+                       [class.font-semibold]="item.active"
+                       [style.border-left]="item.active ? '3px solid white' : ''"
+                       [style.padding-left]="item.active ? 'calc(0.75rem - 3px)' : '0.75rem'"
+                       class="block py-1.5 px-3 rounded text-sm text-emerald-200 hover:text-white hover:bg-emerald-600 focus:outline-none focus:bg-emerald-600 focus:text-white transition-colors duration-150">
+                        {{item.name}}
+                        <i *ngIf="item.important" class="fas fa-exclamation-circle text-yellow-400 ml-1"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</aside> 

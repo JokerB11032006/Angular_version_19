@@ -1,0 +1,130 @@
+<div class="app-container">
+    <!-- Navigation sidebar -->
+    <app-nav></app-nav>
+
+    <!-- Main content area -->
+    <main class="main-content">
+        <!-- Header -->
+        <app-header></app-header>
+
+        <!-- Content area -->
+        <div class="content-area">
+            <!-- Page Title -->
+            <div class="page-header">
+                <h1>RPT Transactions</h1>
+            </div>
+
+            <!-- Tabs Section -->
+            <div class="tabs-section">
+                <button class="tab-button" 
+                        [class.active]="activeTab === 'balance-sheet'"
+                        (click)="setActiveTab('balance-sheet')">
+                    Balance Sheet
+                </button>
+                <button class="tab-button" 
+                        [class.active]="activeTab === 'statement-of-operations'"
+                        (click)="setActiveTab('statement-of-operations')">
+                    Statement of Operations
+                </button>
+                <button class="tab-button" 
+                        [class.active]="activeTab === 'intercompany-transactions'"
+                        (click)="setActiveTab('intercompany-transactions')">
+                    Intercompany Transactions
+                </button>
+            </div>
+
+            <!-- Search and Download Section -->
+            <div class="actions-row">
+                <div class="search-box">
+                    <input type="text" 
+                           [(ngModel)]="searchQuery"
+                           (input)="searchTransactions($any($event.target).value)"
+                           placeholder="Search in table...">
+                </div>
+                <button class="btn-download" (click)="downloadCurrentView()">
+                    Download Current View
+                </button>
+            </div>
+
+            <!-- Transactions Table -->
+            <div class="transactions-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <!-- Common columns -->
+                            <th>ENTITY NAME 1</th>
+                            <th>GROUPINGS</th>
+
+                            <!-- Balance Sheet specific columns -->
+                            <ng-container *ngIf="activeTab === 'balance-sheet'">
+                                <th>ENTITY 2</th>
+                                <th>DOCUMENT CURRENCY</th>
+                                <th>POSTING DATE</th>
+                                <th>AMOUNT IN LOCAL CURRENCY</th>
+                            </ng-container>
+
+                            <!-- Statement of Operations specific columns -->
+                            <ng-container *ngIf="activeTab === 'statement-of-operations'">
+                                <th>ENTITY 2</th>
+                                <th>DOCUMENT CURRENCY</th>
+                                <th>OPENING BALANCE</th>
+                                <th>AMOUNT IN DOCUMENT CURRENCY</th>
+                            </ng-container>
+
+                            <!-- Intercompany Transactions specific columns -->
+                            <ng-container *ngIf="activeTab === 'intercompany-transactions'">
+                                <th>AMOUNT IN DOCUMENT CURRENCY</th>
+                                <th>ENTITY NAME 2</th>
+                                <th>AMOUNT IN DOCUMENT CURRENCY</th>
+                                <th>DIFFERENCE</th>
+                                <th>VALIDATION TEST</th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let transaction of currentTransactions">
+                            <!-- Common columns -->
+                            <td>{{ transaction.entityName1 }}</td>
+                            <td>{{ transaction.groupings }}</td>
+
+                            <!-- Balance Sheet specific columns -->
+                            <ng-container *ngIf="activeTab === 'balance-sheet'">
+                                <td>{{ transaction.entity2 }}</td>
+                                <td>{{ transaction.documentCurrency }}</td>
+                                <td>{{ transaction.postingDate }}</td>
+                                <td>{{ transaction.amountInLocalCurrency }}</td>
+                            </ng-container>
+
+                            <!-- Statement of Operations specific columns -->
+                            <ng-container *ngIf="activeTab === 'statement-of-operations'">
+                                <td>{{ transaction.entity2 }}</td>
+                                <td>{{ transaction.documentCurrency }}</td>
+                                <td>{{ transaction.openingBalance }}</td>
+                                <td>{{ transaction.amountInDocumentCurrency }}</td>
+                            </ng-container>
+
+                            <!-- Intercompany Transactions specific columns -->
+                            <ng-container *ngIf="activeTab === 'intercompany-transactions'">
+                                <td>{{ transaction.amountInDocumentCurrency1 }}</td>
+                                <td>{{ transaction.entityName2 }}</td>
+                                <td>{{ transaction.amountInDocumentCurrency2 }}</td>
+                                <td [class.difference-warning]="transaction.difference !== 0">
+                                    {{ transaction.difference }}
+                                </td>
+                                <td [class.validation-passed]="transaction.validationTest === 'Passed'"
+                                    [class.validation-failed]="transaction.validationTest === 'Failed'">
+                                    {{ transaction.validationTest }}
+                                </td>
+                            </ng-container>
+                        </tr>
+                        <tr *ngIf="currentTransactions.length === 0">
+                            <td [attr.colspan]="activeTab === 'intercompany-transactions' ? 7 : 6" class="no-data">
+                                No transactions found
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div> 

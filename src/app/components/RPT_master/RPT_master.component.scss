@@ -1,0 +1,435 @@
+/* Base styles */
+:host {
+    display: block;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Main layout container */
+.app-container {
+    display: flex;
+    height: 100%;
+    background-color: #f1f4f9;
+    overflow: hidden;
+}
+
+/* Main content area */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 256px; // Width of the sidebar
+    min-width: 0; // Prevent flex item from overflowing
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Content area with padding */
+.content-area {
+    flex: 1;
+    padding: 24px;
+    margin-top: 72px; // Height of the header
+    overflow-y: auto;
+    background-color: #f1f4f9;
+
+    // Custom scrollbar
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+
+        &:hover {
+            background: #555;
+        }
+    }
+
+    // Ensure scrollbar doesn't cause layout shift
+    scrollbar-gutter: stable;
+}
+
+/* Action bar styles */
+.action-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+/* Button styles */
+.btn-add-rpt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: #059669;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #1565c0;
+    }
+
+    i {
+        font-size: 16px;
+    }
+}
+
+/* Form Container Styles */
+.rpt-form-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    height: calc(100vh - 180px);
+    display: flex;
+    overflow: hidden;
+}
+
+.form-layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* Stepper Section Styles */
+.stepper-section {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #e0e0e0;
+    background-color: #f8f9fa;
+}
+
+.stepper-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #fff;
+
+    h2 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+    }
+}
+
+/* Side Stepper Styles */
+.side-stepper {
+    flex: 1;
+    padding: 24px 0;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+}
+
+.step-item {
+    display: flex;
+    align-items: flex-start; // Changed to flex-start for better alignment
+    padding: 16px 24px;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #666;
+    min-height: 60px; // Added minimum height
+    position: relative;
+    border-left: 3px solid transparent;
+
+    &:hover {
+        background-color: #f1f4f9;
+    }
+
+    &.active {
+        background-color: #e3f2fd;
+        color: #1976d2;
+        font-weight: 500;
+        border-left: 3px solid #1976d2;
+
+        .step-number {
+            background-color: #1976d2;
+            color: white;
+        }
+    }
+
+    &.completed {
+        color: #2e7d32;
+        border-left: 3px solid #2e7d32;
+
+        .step-number {
+            background-color: #2e7d32;
+            color: white;
+        }
+    }
+
+    span {
+        flex: 1;
+        font-size: 14px;
+        line-height: 1.4;
+        padding-top: 2px; // Align with step number
+    }
+}
+
+.step-number {
+    width: 24px;
+    height: 24px;
+    min-width: 24px; // Added to prevent shrinking
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    margin-top: 2px; // Better vertical alignment
+}
+
+/* Form Content Styles */
+.form-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+}
+
+.form-header {
+    padding: 20px 32px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+
+    h2 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+    }
+}
+
+.form-scroll-area {
+    flex: 1;
+    padding: 24px 32px; // Increased horizontal padding
+    overflow-y: auto;
+    margin-bottom: 80px;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+
+        &:hover {
+            background: #555;
+        }
+    }
+}
+
+.step-content {
+    margin-bottom: 24px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-field {
+    &.full-width {
+        grid-column: 1 / -1;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-size: 14px;
+        font-weight: 500;
+
+        .required {
+            color: #d32f2f;
+            margin-left: 4px;
+        }
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        font-size: 14px;
+        font-family: 'Inter', sans-serif;
+
+        &:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+
+        &.ng-invalid.ng-touched {
+            border-color: #d32f2f;
+        }
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-weight: normal;
+        margin: 0;
+    }
+}
+
+/* File upload area styles */
+.file-upload-area {
+    border: 2px dashed #e0e0e0;
+    border-radius: 4px;
+    padding: 32px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+
+    input[type="file"] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .upload-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: #666;
+
+        i {
+            font-size: 24px;
+        }
+
+        span {
+            font-size: 14px;
+        }
+    }
+
+    &:hover {
+        border-color: #1976d2;
+    }
+}
+
+/* Form Navigation */
+.form-navigation {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background-color: white;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.nav-left {
+    .btn-cancel {
+        padding: 10px 24px;
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        color: #666;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: #f5f5f5;
+        }
+    }
+}
+
+.nav-right {
+    display: flex;
+    gap: 16px;
+
+    .btn-previous,
+    .btn-next,
+    .btn-submit {
+        padding: 10px 24px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .btn-previous {
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        color: #333;
+
+        &:hover {
+            background-color: #f5f5f5;
+        }
+    }
+
+    .btn-next,
+    .btn-submit {
+        background-color: #1976d2;
+        border: none;
+        color: white;
+
+        &:hover {
+            background-color: #1565c0;
+        }
+    }
+} 

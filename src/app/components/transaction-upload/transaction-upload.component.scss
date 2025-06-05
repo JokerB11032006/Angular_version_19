@@ -1,0 +1,219 @@
+/* Base layout */
+:host {
+    display: block;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+.app-container {
+    display: flex;
+    height: 100%;
+    background-color: #f5f6f8;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 256px; // Width of the nav sidebar
+    min-width: 0;
+}
+
+.content-area {
+    flex: 1;
+    padding: 24px;
+    margin-top: 64px; // Height of the header
+}
+
+/* Period Info */
+.period-info {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    background-color: #e5e7eb;
+    padding: 12px 24px;
+    border-radius: 4px;
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .label {
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .value {
+            color: #4b5563;
+        }
+    }
+}
+
+/* Upload Section */
+.upload-section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+/* Upload Type Dropdown */
+.upload-type {
+    margin-bottom: 24px;
+
+    select {
+        width: 100%;
+        max-width: 400px;
+        padding: 10px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #1f2937;
+        background-color: white;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+
+        &:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 1px #2563eb;
+        }
+
+        &.empty {
+            color: #9ca3af;
+        }
+
+        option {
+            color: #1f2937;
+        }
+    }
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    transition: all 0.2s;
+    background-color: #f9fafb;
+    margin-bottom: 16px;
+
+    &.dragging {
+        border-color: #2563eb;
+        background-color: #eff6ff;
+    }
+
+    .upload-content {
+        .upload-prompt {
+            .upload-button {
+                background-color: #2563eb;
+                color: white;
+                padding: 10px 24px;
+                border: none;
+                border-radius: 4px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                margin-bottom: 12px;
+                transition: background-color 0.2s;
+
+                &:hover {
+                    background-color: darken(#2563eb, 5%);
+                }
+            }
+
+            p {
+                color: #6b7280;
+                margin: 0;
+                font-size: 14px;
+            }
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+
+            .file-name {
+                color: #1f2937;
+                font-size: 14px;
+            }
+
+            .remove-file {
+                background: none;
+                border: none;
+                color: #ef4444;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 4px;
+                line-height: 1;
+
+                &:hover {
+                    color: darken(#ef4444, 10%);
+                }
+            }
+        }
+    }
+}
+
+/* Add More Link */
+.add-more {
+    text-align: right;
+
+    a {
+        color: #2563eb;
+        font-size: 14px;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+
+    button {
+        padding: 10px 24px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: 'Inter', sans-serif;
+
+        &.btn-cancel {
+            background-color: white;
+            border: 1px solid #d1d5db;
+            color: #4b5563;
+
+            &:hover {
+                background-color: #f9fafb;
+            }
+        }
+
+        &.btn-save {
+            background-color: #2563eb;
+            border: none;
+            color: white;
+
+            &:hover {
+                background-color: darken(#2563eb, 5%);
+            }
+
+            &:disabled {
+                background-color: #93c5fd;
+                cursor: not-allowed;
+            }
+        }
+    }
+} 

@@ -1,0 +1,71 @@
+<div class="app-container">
+    <!-- Navigation sidebar -->
+    <app-nav></app-nav>
+
+    <!-- Main content area -->
+    <main class="main-content">
+        <!-- Header -->
+        <app-header></app-header>
+
+        <!-- Content area -->
+        <div class="content-area">
+
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <!-- Upload Type Dropdown -->
+                <div class="upload-type">
+                    <select [(ngModel)]="selectedUploadType" 
+                            (change)="onUploadTypeChange($event)"
+                            [class.empty]="!selectedUploadType">
+                        <option value="" disabled selected>Upload Dropdown list</option>
+                        <option *ngFor="let option of uploadOptions" 
+                                [value]="option.id">
+                            {{ option.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Drag & Drop Area -->
+                <div class="upload-area"
+                     [class.dragging]="isDragging"
+                     (dragover)="onDragOver($event)"
+                     (dragleave)="onDragLeave($event)"
+                     (drop)="onDrop($event)">
+                    
+                    <div class="upload-content">
+                        <input type="file" 
+                               #fileInput
+                               (change)="onFileSelected($event)"
+                               [accept]="'.xlsx,.xls,.csv'"
+                               hidden>
+                        
+                        <div class="upload-prompt" *ngIf="!selectedFile">
+                            <button class="upload-button" (click)="fileInput.click()">Upload</button>
+                            <p>or drag and drop your file here</p>
+                        </div>
+
+                        <div class="file-info" *ngIf="selectedFile">
+                            <span class="file-name">{{ selectedFile.name }}</span>
+                            <button class="remove-file" (click)="selectedFile = null">×</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add More Link -->
+                <div class="add-more">
+                    <a (click)="addMore()">Add more</a>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn-cancel" (click)="cancel()">Cancel</button>
+                <button class="btn-save" 
+                        [disabled]="!selectedFile || !selectedUploadType"
+                        (click)="uploadFile()">
+                    Save and Update
+                </button>
+            </div>
+        </div>
+    </main>
+</div> 

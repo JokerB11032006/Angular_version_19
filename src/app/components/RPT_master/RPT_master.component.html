@@ -1,0 +1,296 @@
+<!-- Main layout container -->
+<div class="app-container">
+    <!-- Navigation sidebar -->
+    <app-nav></app-nav>
+
+    <!-- Main content area -->
+    <main class="main-content">
+        <!-- Header -->
+        <app-header></app-header>
+
+       
+        <!-- Content area with padding -->
+        <div class="content-area">
+            <!-- Add New RPT Button - Only show when form is not visible -->
+            <div class="action-bar" *ngIf="!showForm">
+                <button class="btn-add-rpt" (click)="showForm = true">
+                    <i class="fas fa-plus"></i>
+                    Add New RPT
+                </button>
+            </div>
+            
+            <!-- RPT Form -->
+            <div class="rpt-form-container" *ngIf="showForm">
+                <div class="form-layout">
+                    <!-- Side Stepper -->
+                    <div class="stepper-section">
+                        <div class="stepper-header">
+                            <h2>RPT Master</h2>
+                        </div>
+                        <div class="side-stepper">
+                            <div class="step-item" 
+                            [class.active]="currentStep === 1"
+                            [class.completed]="currentStep > 1"
+                            (click)="setStep(1)">
+                            <div class="step-number">
+                                <ng-container *ngIf="currentStep > 1; else stepOne">✓</ng-container>
+                                <ng-template #stepOne>1</ng-template>
+                            </div>
+                            <span>Basic Details</span>
+                        </div>
+
+                        <div class="step-item" 
+         [class.active]="currentStep === 2"
+         [class.completed]="currentStep > 2"
+         (click)="setStep(2)">
+        <div class="step-number">
+            <ng-container *ngIf="currentStep > 2; else stepTwo">✓</ng-container>
+            <ng-template #stepTwo>2</ng-template>
+        </div>
+        <span>Business Details</span>
+    </div>
+
+                         <div class="step-item" 
+         [class.active]="currentStep === 3"
+         [class.completed]="currentStep > 3"
+         (click)="setStep(3)">
+        <div class="step-number">
+            <ng-container *ngIf="currentStep > 3; else stepThree">✓</ng-container>
+            <ng-template #stepThree>3</ng-template>
+        </div>
+        <span>Relationship and Compliance</span>
+    </div>
+    
+    <div class="step-item" 
+    [class.active]="currentStep === 4"
+    (click)="setStep(4)">
+   <div class="step-number">
+       <ng-container *ngIf="currentStep > 4; else stepFour">✓</ng-container>
+       <ng-template #stepFour>4</ng-template>
+   </div>
+   <span>Others</span>
+</div>
+                        </div>
+                    </div>
+
+                    <!-- Form Content -->
+                    <div class="form-content">
+                        <div class="form-header">
+                            <h2>{{ getCurrentStepTitle() }}</h2>
+                        </div>
+                        <div class="form-scroll-area" [formGroup]="rptForm">
+                            <!-- Step 1: Basic Details -->
+                            <div class="step-content" *ngIf="currentStep === 1">
+                                <div class="form-grid">
+                                    <div class="form-field">
+                                        <label>Name of the Entity</label>
+                                        <select formControlName="nameOfEntity">
+                                            <option value="">Select Entity</option>
+                                            <option *ngFor="let type of entityTypes" [value]="type">{{type}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Contact Number</label>
+                                        <input type="text" formControlName="contactNumber">
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Name of the Related Party<span class="required">*</span></label>
+                                        <input type="text" formControlName="nameOfRelatedParty">
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Nature of Business</label>
+                                        <input type="text" formControlName="natureOfBusiness">
+                                    </div>
+                                    <div class="form-field full-width">
+                                        <label>Address</label>
+                                        <textarea formControlName="address" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Email id</label>
+                                        <input type="email" formControlName="emailId">
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Previous Name ?</label>
+                                        <div class="radio-group">
+                                            <label>
+                                                <input type="radio" formControlName="hasPreviousName" [value]="true"> Yes
+                                            </label>
+                                            <label>
+                                                <input type="radio" formControlName="hasPreviousName" [value]="false"> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-field" *ngIf="rptForm.get('hasPreviousName')?.value">
+                                        <label>Previous Name If applicable</label>
+                                        <input type="text" formControlName="previousName">
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Entity Type</label>
+                                        <select formControlName="entityType">
+                                            <option value="">Select Type</option>
+                                            <option *ngFor="let type of entityTypes" [value]="type">{{type}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Business Details -->
+                            <div class="step-content" *ngIf="currentStep === 2">
+                                <div class="form-grid">
+                                    <div class="form-field">
+                                        <label>Country</label>
+                                        <select formControlName="country">
+                                            <option value="">Select Country</option>
+                                            <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-field">
+                                        <label>GST ( if multiple, segregate with ";")</label>
+                                        <input type="text" formControlName="gst">
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Functional Currency</label>
+                                        <select formControlName="functionalCurrency">
+                                            <option value="">Select Currency</option>
+                                            <option *ngFor="let currency of currencies" [value]="currency">{{currency}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-field">
+                                        <label>CIN<span class="required">*</span></label>
+                                        <input type="text" formControlName="cin">
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Any other registration Number</label>
+                                        <input type="text" formControlName="otherRegistrationNumber">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Relationship and Compliance -->
+                            <div class="step-content" *ngIf="currentStep === 3">
+                                <div class="form-grid">
+                                    <div class="form-field">
+                                        <label>Relationship creation date<span class="required">*</span></label>
+                                        <input type="date" formControlName="relationshipCreationDate">
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Relationship cessation date</label>
+                                        <input type="date" formControlName="relationshipCessationDate">
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Category<span class="required">*</span></label>
+                                        <select formControlName="category">
+                                            <option value="">Select Category</option>
+                                            <option *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Financial information collected for previous three financial years?</label>
+                                        <input type="text" formControlName="financialInformationCollected">
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Related party as per Companies Act<span class="required">*</span></label>
+                                        <div class="radio-group">
+                                            <label>
+                                                <input type="radio" formControlName="relatedPartyCompaniesAct" [value]="true"> Yes
+                                            </label>
+                                            <label>
+                                                <input type="radio" formControlName="relatedPartyCompaniesAct" [value]="false"> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Related party as per LODR<span class="required">*</span></label>
+                                        <div class="radio-group">
+                                            <label>
+                                                <input type="radio" formControlName="relatedPartyLODR" [value]="true"> Yes
+                                            </label>
+                                            <label>
+                                                <input type="radio" formControlName="relatedPartyLODR" [value]="false"> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Related party as per IndAS<span class="required">*</span></label>
+                                        <div class="radio-group">
+                                            <label>
+                                                <input type="radio" formControlName="relatedPartyIndAS" [value]="true"> Yes
+                                            </label>
+                                            <label>
+                                                <input type="radio" formControlName="relatedPartyIndAS" [value]="false"> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Shareholding percentage (%)<span class="required">*</span></label>
+                                        <input type="number" formControlName="shareholdingPercentage">
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Whether change in Relationship</label>
+                                        <div class="radio-group">
+                                            <label>
+                                                <input type="radio" formControlName="hasRelationshipChanged" [value]="true"> Yes
+                                            </label>
+                                            <label>
+                                                <input type="radio" formControlName="hasRelationshipChanged" [value]="false"> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-field" *ngIf="rptForm.get('hasRelationshipChanged')?.value">
+                                        <label>New Relationship</label>
+                                        <input type="text" formControlName="newRelationship">
+                                    </div>
+                                    <div class="form-field" *ngIf="rptForm.get('hasRelationshipChanged')?.value">
+                                        <label>Date of change in Relationship</label>
+                                        <input type="date" formControlName="dateOfRelationshipChange">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: Others (Documents) -->
+                            <div class="step-content" *ngIf="currentStep === 4">
+                                <div class="form-grid">
+                                    <div class="form-field full-width">
+                                        <label>Incorporation documents upload</label>
+                                        <div class="file-upload-area">
+                                            <input type="file" (change)="onFileSelected($event, 'incorporationDocuments')" accept=".csv,.xlsx">
+                                            <div class="upload-placeholder">
+                                                <i class="fas fa-upload"></i>
+                                                <span>Drag & drop CSV / XLSX here</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-field full-width">
+                                        <label>Other documents upload</label>
+                                        <div class="file-upload-area">
+                                            <input type="file" (change)="onFileSelected($event, 'otherDocuments')" accept=".csv,.xlsx">
+                                            <div class="upload-placeholder">
+                                                <i class="fas fa-upload"></i>
+                                                <span>Drag & drop CSV / XLSX here</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Navigation -->
+                        <div class="form-navigation">
+                            <div class="nav-left">
+                                <button class="btn-cancel" (click)="showForm = false">Cancel</button>
+                            </div>
+                            <div class="nav-right">
+                                <button class="btn-previous" *ngIf="currentStep > 1" (click)="previousStep()">Previous</button>
+                                <button class="btn-next" *ngIf="currentStep < totalSteps" (click)="nextStep()">Next</button>
+                                <button class="btn-submit" *ngIf="currentStep === totalSteps" (click)="submitForm()">Submit Agreement</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table component - Only show when form is not visible -->
+            <app-table *ngIf="!showForm"></app-table>
+        </div>
+    </main>
+</div> 

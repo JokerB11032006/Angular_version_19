@@ -1,0 +1,153 @@
+<div class="app-container">
+    <!-- Navigation sidebar -->
+    <app-nav></app-nav>
+
+    <!-- Main content area -->
+    <main class="main-content">
+        <!-- Header -->
+        <app-header></app-header>
+
+        <!-- Content area -->
+        <div class="content-area">
+            <div class="page-header">
+                <h1>Upload Approval Limits</h1>
+            </div>
+
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <!-- Turnover Upload -->
+                <div class="upload-container">
+                    <div class="upload-header">
+                        <h3>Turnover Upload</h3>
+                        <button class="btn-download" (click)="downloadTurnoverTemplate()">
+                            Download Template
+                        </button>
+                    </div>
+                    
+                    <div class="upload-area"
+                         [class.dragging]="isDraggingTurnover"
+                         (dragover)="onDragOver($event, 'turnover')"
+                         (dragleave)="onDragLeave($event, 'turnover')"
+                         (drop)="onDrop($event, 'turnover')">
+                        
+                        <div class="upload-content">
+                            <input type="file" 
+                                   #turnoverInput
+                                   (change)="onTurnoverFileSelected($event)"
+                                   accept=".csv"
+                                   hidden>
+                            
+                            <div class="upload-prompt" *ngIf="!turnoverFile">
+                                <div class="upload-actions">
+                                    <button class="upload-button" (click)="turnoverInput.click()">Choose File</button>
+                                    <span class="upload-text">or drag and drop your file here</span>
+                                </div>
+                                <div class="file-type-info">Allowed type: .CSV</div>
+                            </div>
+
+                            <div class="file-info" *ngIf="turnoverFile">
+                                <span class="file-name">{{ turnoverFile.name }}</span>
+                                <button class="remove-file" (click)="removeTurnoverFile()">×</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="upload-status" *ngIf="turnoverUploadStatus">
+                        {{ turnoverUploadStatus }}
+                    </div>
+                </div>
+
+                <!-- Approval Limits Upload -->
+                <div class="upload-container">
+                    <div class="upload-header">
+                        <h3>Approval Limits Upload</h3>
+                        <button class="btn-download" (click)="downloadApprovalLimitsTemplate()">
+                            Download Template
+                        </button>
+                    </div>
+                    
+                    <div class="upload-area"
+                         [class.dragging]="isDraggingApprovalLimits"
+                         (dragover)="onDragOver($event, 'approvalLimits')"
+                         (dragleave)="onDragLeave($event, 'approvalLimits')"
+                         (drop)="onDrop($event, 'approvalLimits')">
+                        
+                        <div class="upload-content">
+                            <input type="file" 
+                                   #approvalLimitsInput
+                                   (change)="onApprovalLimitsFileSelected($event)"
+                                   accept=".csv"
+                                   hidden>
+                            
+                            <div class="upload-prompt" *ngIf="!approvalLimitsFile">
+                                <div class="upload-actions">
+                                    <button class="upload-button" (click)="approvalLimitsInput.click()">Choose File</button>
+                                    <span class="upload-text">or drag and drop your file here</span>
+                                </div>
+                                <div class="file-type-info">Allowed type: .CSV</div>
+                            </div>
+
+                            <div class="file-info" *ngIf="approvalLimitsFile">
+                                <span class="file-name">{{ approvalLimitsFile.name }}</span>
+                                <button class="remove-file" (click)="removeApprovalLimitsFile()">×</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="upload-status" *ngIf="approvalLimitsUploadStatus">
+                        {{ approvalLimitsUploadStatus }}
+                    </div>
+                </div>
+
+                <!-- Attachments Upload -->
+                <div class="upload-container">
+                    <div class="upload-header">
+                        <h3>Approval Attachments</h3>
+                    </div>
+                    
+                    <div class="upload-area"
+                         [class.dragging]="isDraggingAttachments"
+                         (dragover)="onDragOver($event, 'attachments')"
+                         (dragleave)="onDragLeave($event, 'attachments')"
+                         (drop)="onDrop($event, 'attachments')">
+                        
+                        <div class="upload-content">
+                            <input type="file" 
+                                   #attachmentsInput
+                                   (change)="onAttachmentsSelected($event)"
+                                   accept=".pdf,.doc,.docx,.xls,.xlsx"
+                                   multiple
+                                   hidden>
+                            
+                            <div class="upload-prompt" *ngIf="attachmentFiles.length === 0">
+                                <div class="upload-actions">
+                                    <button class="upload-button" (click)="attachmentsInput.click()">Choose Files</button>
+                                    <span class="upload-text">or drag and drop your files here</span>
+                                </div>
+                                <div class="file-type-info">Allowed types: PDF, DOC, DOCX, XLS, XLSX</div>
+                            </div>
+
+                            <div class="attachments-list" *ngIf="attachmentFiles.length > 0">
+                                <div class="file-info" *ngFor="let file of attachmentFiles">
+                                    <span class="file-name">{{ file.name }}</span>
+                                    <button class="remove-file" (click)="removeAttachmentFile(file)">×</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="upload-status" *ngIf="attachmentsUploadStatus">
+                        {{ attachmentsUploadStatus }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn-cancel" (click)="onCancel()">Cancel</button>
+                <button class="btn-save" 
+                        [disabled]="!canSave()"
+                        (click)="onSave()">
+                    Save and Update
+                </button>
+            </div>
+        </div>
+    </main>
+</div> 

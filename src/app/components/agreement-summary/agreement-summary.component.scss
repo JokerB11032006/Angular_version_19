@@ -1,0 +1,363 @@
+/* Base styles */
+:host {
+    display: block;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Main layout container */
+.app-container {
+    display: flex;
+    height: 100%;
+    background-color: #f1f4f9;
+    overflow: hidden;
+}
+
+/* Main content area */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 256px; // Width of the sidebar
+    min-width: 0; // Prevent flex item from overflowing
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Content area with padding */
+.content-area {
+    flex: 1;
+    padding: 24px;
+    margin-top: 72px; // Height of the header
+    overflow-y: auto;
+    background-color: #f1f4f9;
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h1 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+    }
+
+    .btn-add-rpt {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background-color: #1976d2;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        i {
+            font-size: 14px;
+        }
+
+        &:hover {
+            background-color: darken(#1976d2, 5%);
+        }
+    }
+}
+
+/* Filters Card */
+.filters-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+/* Filters Section */
+.filters-section {
+    display: flex;
+    gap: 24px;
+}
+
+.filter-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+        font-size: 14px;
+        color: #666;
+        font-weight: 500;
+    }
+
+    select {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #333;
+        background-color: white;
+        cursor: pointer;
+        height: 40px;
+
+        &:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+    }
+}
+
+/* Table Card */
+.table-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+}
+
+/* Actions Section */
+.actions-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.search-box {
+    flex: 1;
+    max-width: 300px;
+    position: relative;
+
+    .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 14px;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 8px 12px 8px 36px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        font-size: 14px;
+        height: 40px;
+
+        &:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+
+        &::placeholder {
+            color: #999;
+        }
+    }
+}
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+
+    .btn-action {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        height: 40px;
+        border: none;
+        color: white;
+
+        i {
+            font-size: 14px;
+        }
+
+        &.btn-edit {
+            background-color: #6366F1;
+
+            &:hover {
+                background-color: darken(#6366F1, 5%);
+            }
+        }
+
+        &.btn-export {
+            background-color: #10B981;
+
+            &:hover {
+                background-color: darken(#10B981, 5%);
+            }
+        }
+
+        &.btn-download {
+            background-color: #0EA5E9;
+
+            &:hover {
+                background-color: darken(#0EA5E9, 5%);
+            }
+        }
+    }
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+    border: 0.5px solid #cdcdcd;
+    border-radius: 8px;
+
+    &::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+
+        &:hover {
+            background: #555;
+        }
+    }
+}
+
+.agreement-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+
+    th, td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+        background-color: #f9fafb;
+        color: #6b7280;
+        font-weight: 500;
+        white-space: nowrap;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    td {
+        color: #666;
+    }
+
+    tbody tr {
+        &:hover {
+            background-color: #f8f9fa;
+        }
+    }
+}
+
+/* Form Card */
+.form-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    margin-bottom: 24px;
+
+    h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 24px;
+    }
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 24px;
+
+    .form-group {
+        flex: 1;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+        font-size: 14px;
+        color: #666;
+        font-weight: 500;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        font-size: 14px;
+        height: 40px;
+
+        &:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+    }
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 24px;
+
+    button {
+        padding: 8px 24px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        height: 40px;
+
+        &.btn-add-more {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            color: #666;
+
+            &:hover {
+                background-color: #f5f5f5;
+            }
+        }
+
+        &.btn-upload {
+            background-color: #00875a;
+            color: white;
+            border: none;
+
+            &:hover {
+                background-color: darken(#00875a, 5%);
+            }
+        }
+    }
+} 

@@ -1,0 +1,137 @@
+<div class="app-container">
+    <!-- Navigation sidebar -->
+    <app-nav></app-nav>
+
+    <!-- Main content area -->
+    <main class="main-content">
+        <!-- Header -->
+        <app-header></app-header>
+
+        <!-- Content area -->
+        <div class="content-area">
+            <!-- Page Title and Add Button -->
+            <div class="page-header">
+                <h1>Agreement Summary</h1>
+            </div>
+
+            <!-- Upload Agreement Form -->
+            <div class="form-card" *ngIf="showUploadForm">
+                <h2>Agreements upload</h2>
+                <div class="form-container">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Entity 1</label>
+                            <input type="text" [(ngModel)]="agreementForm.entity1">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input type="text" [(ngModel)]="agreementForm.category">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Entity 2</label>
+                            <input type="text" [(ngModel)]="agreementForm.entity2">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input type="text" [(ngModel)]="agreementForm.category2">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" [(ngModel)]="agreementForm.startDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Period</label>
+                            <input type="text" [(ngModel)]="agreementForm.period">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <input type="date" [(ngModel)]="agreementForm.endDate">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-add-more" (click)="onAddMore()">Cancel</button>
+                        <button class="btn-upload" (click)="onSave()">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters Card -->
+            <div class="filters-card" *ngIf="!showUploadForm">
+                <div class="filters-section">
+                    <div class="filter-group">
+                        <label>Financial Year</label>
+                        <select [(ngModel)]="selectedFinancialYear">
+                            <option *ngFor="let year of financialYears" [value]="year">{{ year }}</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Period Quarter</label>
+                        <select [(ngModel)]="selectedQuarter">
+                            <option *ngFor="let quarter of quarters" [value]="quarter">{{ quarter }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="table-card" *ngIf="!showUploadForm">
+                <!-- Search and Actions Section -->
+                <div class="actions-section">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" 
+                               [(ngModel)]="searchQuery" 
+                               placeholder="Search in table..."
+                               class="search-input">
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-action btn-export" (click)="onUploadAgreement()">
+                            <i class="fas fa-plus"></i>
+                            Add Agreement
+                        </button>
+                       
+                    </div>
+                </div>
+
+                <!-- Table Section -->
+                <div class="table-container">
+                    <table class="agreement-table">
+                        <thead>
+                            <tr>
+                                <th>S.NO</th>
+                                <th>ENTITY 1</th>
+                                <th>CATEGORY</th>
+                                <th>ENTITY 2</th>
+                                <th>CATEGORY</th>
+                                <th>START DATE</th>
+                                <th>END DATE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of getFilteredData()">
+                                <td>{{ item['S.NO'] }}</td>
+                                <td>{{ item['ENTITY 1'] }}</td>
+                                <td>{{ item['CATEGORY'] }}</td>
+                                <td>{{ item['ENTITY 2'] }}</td>
+                                <td>{{ item['CATEGORY 2'] }}</td>
+                                <td>{{ item['START DATE'] }}</td>
+                                <td>{{ item['END DATE'] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div> 
